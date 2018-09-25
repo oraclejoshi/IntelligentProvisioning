@@ -1,0 +1,21 @@
+{
+  "name" : "ByeBye",
+  "type" : "NLPIntent",
+  "intentParameters" : [ ],
+  "exampleData" : [ {
+    "sentence" : "thanks",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "bye",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "i am done",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "okay",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "thank you",
+    "exampleEntities" : [ ]
+  } ]
+}

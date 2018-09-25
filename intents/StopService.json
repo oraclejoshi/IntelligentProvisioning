@@ -1,0 +1,15 @@
+{
+  "name" : "StopService",
+  "type" : "NLPIntent",
+  "intentParameters" : [ ],
+  "exampleData" : [ {
+    "sentence" : "stop db",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "stop service",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "stop database",
+    "exampleEntities" : [ ]
+  } ]
+}

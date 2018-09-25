@@ -1,0 +1,355 @@
+metadata:
+  platformVersion: 1.0
+main: true
+name: ProvisioningBot
+#context: Define the variables which will used throughout the dialog flow here.
+context:
+  variables:
+    greeting: "string"
+    name: "string"
+    serviceName: "string"
+    containerIterator: "string"
+    containerName: "string"
+    existingStorageQuery: "string"
+    tag: "string"
+    iResult: "string"    
+
+states:
+  intent:
+    component: "System.Intent"
+    properties:
+      variable: "iResult"
+      confidenceThreshold: 0.4
+    transitions:
+      actions:
+        CreateService: "useExistingStorage"
+        CreateStorageContainer: "createStorageStart"
+        StopService: "stopServiceStart"
+        StartService: "beginStartService"
+        Greetings: "printGreeting"
+        ByeBye: "bye"
+        Refresh: "refresh"
+        StartRecovery: "startRecovery"
+        StartBackup: "startBackup"
+        unresolvedIntent: "NoneComponent"
+  printGreeting:
+    component: "System.Output"
+    properties:
+      text: "Welcome to Cloud Provisioning Virtual Assistant. How may I help you?"
+      keepTurn: false
+    transitions:
+      return: "printGreeting"
+      
+  useExistingStorage:
+    component: "System.List"
+    properties:
+      options: "Yes,No"
+      prompt: "Do you want to use existing stroage?"
+      variable: "existingStorageQuery"
+      maxPrompts: -1
+    transitions: {}
+  switch:
+    component: "System.Switch"
+    properties:
+      variable: "existingStorageQuery"
+      values:
+      - "Yes"
+      - "No"
+    transitions:
+      actions:
+        Yes: "createServiceStart"
+        No: "createStorageForDBStart"
+        NONE: "NoneComponent"  
+            
+      
+  createServiceStart:
+    component: "populate.list.variable"
+    properties:
+      variableName: "containerIterator"
+
+  askContainer:
+    component: "System.CommonResponse"
+    properties:
+      processUserMessage: true      
+      metadata: 
+        responseItems:         
+        - type: "text"  
+          text: "What's your storage container name?"       
+          separateBubbles: false
+          rendered: 
+        - type: "text"  
+          text: "Choose from here."
+          actions: 
+          - label: "${containerIterator.label}"
+            type: "postback"
+            keyword: 
+            payload: 
+              action: "askServiceName"
+              variables: 
+                containerName: "${containerIterator.value}"
+            iteratorVariable: "containerIterator"
+    transitions: 
+      actions: 
+        askServiceName: "askServiceName"
+        
+  #state reached when no valid selection was made
+  NoCoiceMade:
+    component: "System.Output"
+    properties:
+      text: "You failed making a choice"
+      keepTurn: false
+    transitions:
+      return: "done"
+      
+  #state naigated to when a valid selection was made
+  printChoice:
+    component: "System.Output"
+    properties:
+      text: "Your choice is ${containerName.value}"
+      keepTurn: false
+    transitions:
+      return: "done"        
+      
+  askServiceName:
+    component: "System.Text"
+    properties:
+     prompt: "Provide a Database Service name to continue?"
+     variable: "serviceName"
+     
+  createService:
+    component: "createService"
+    properties:
+      serviceName: "${serviceName.value}"
+      containerName: "${containerName.value}"
+    transitions:
+      next: "bye"
+      
+  createStorageStart:
+    component: "System.Text"
+    properties:
+     prompt: "Provide a storage container name?"
+     variable: "containerName"        
+  createStorage:
+    component: "createStorage"
+    properties:
+      containerName: "${containerName.value}"    
+    transitions:
+      return: "createStorage"
+      
+  createStorageForDBStart:
+    component: "System.Text"
+    properties:
+     prompt: "Provide a storage container name?"
+     variable: "containerName"  
+  createStorageForDB:
+    component: "createStorage"
+    properties:
+      containerName: "${containerName.value}"    
+    transitions:
+      next: "askServiceName"
+      
+  stopServiceStart:
+    component: "System.Text"
+    properties:
+     prompt: "Provide a database service you want to stop?"
+     variable: "serviceName"
+  stopStartService:
+    component: "stopStartService"
+    properties:
+      serviceName: "${serviceName.value}"
+      operationName: "stop"
+    transitions:
+      return: "stopStartService"
+      
+  beginStartService:
+    component: "System.Text"
+    properties:
+     prompt: "Provide a database service you want to start?"
+     variable: "serviceName"
+  startService:
+    component: "stopStartService"
+    properties:
+      serviceName: "${serviceName.value}"
+      operationName: "start"
+    transitions:
+      return: "stopStartService" 
+      
+  refresh:
+    component: "System.Text"
+    properties:
+     prompt: "Provide a database name you want to refresh?"
+     variable: "containerName"
+  refreshed:
+    component: "refresh"
+    properties:
+      containerName: "${containerName.value}"    
+    transitions:
+      return: "refreshed"
+  
+  startRecovery:
+    component: "System.Text"
+    properties: 
+      prompt: "Provide a database name you want to recover?"
+      variable: "containerName"
+  tagListIds:
+    component: "populate.tag.ids"
+    properties:
+      containerName: "${containerName.value}"
+      variableName: "containerIterator"
+    transitions: {}
+  
+  conditionEquals:
+    component: "System.ConditionEquals"
+    properties:
+      # variable (optional) refers to the context or user variable that holds the value that is compared against the value of the value property. The variable and source properties are mutually exclusive. If both are set, the variable property is ignored.
+      variable: "containerIterator"
+      # source (optional) can contain a freemarker expression. The value of the resolved freemarker expression is compared against the value of the value property. 
+      source:
+      # value refers to the value that is compared to the value of the variable or source property. If the two values are equal, then the 'equal' transition action is set. Otherwise, 'notequal' is set.
+      value: null
+    transitions:
+      actions: 
+        equal: "emptyTagList"
+        notequal: "askTagIds"
+        
+  emptyTagList:
+    component: "System.Output"
+    properties:
+      text: "Restore point not available"
+    transitions:
+      return: "emptyTagList"
+      
+  askTagIds:
+    component: "System.CommonResponse"
+    properties:
+      processUserMessage: true      
+      metadata: 
+        responseItems:         
+        - type: "text"  
+          text: "Please enter the tag id to recover?"       
+          separateBubbles: false
+          rendered: 
+        - type: "text"  
+          text: "Choose from here."
+          actions: 
+          - label: "${containerIterator.label}: ${containerIterator.date}"
+            type: "postback"
+            keyword: 
+            payload: 
+              action: "startRecoveryProcess"
+              variables: 
+                tag: "${containerIterator.label}"
+            iteratorVariable: "containerIterator"
+    transitions: {}
+      
+  startRecoveryProcess:
+    component: "startRecovery"
+    properties:
+      containerName: "${containerName.value}"
+      tag: "${tag.value}"
+    transitions:
+      return: "startRecoveryProcess"
+  
+  startBackup:
+    component: "System.Text"
+    properties: 
+      prompt: "Provide a database name you want to backup"
+      variable: "containerName"
+  backup:
+    component: "startBackup"
+    properties:
+      containerName: "${containerName.value}"    
+    transitions:
+      return: "backup"
+    
+      
+  bye:
+    component: "System.List"
+    properties:
+      prompt: "Is there anything else I can help you with today"
+      options:
+      - label: "Yes"
+        value: "yes" 
+      - label: "No"
+        value: "no"
+      translate: 
+    transitions: 
+      actions:
+        yes: "agent"
+        no: "byebye"
+        NONE: "NoneComponent"
+  byebye: 
+    component: "System.Output"
+    properties:
+      text: "It was  our pleasure talking to you today! Have a nice day"
+      keepTurn: true
+    transitions:
+      return: "intent"
+  agent:
+    component: "System.Output"
+    properties:
+      text: "I’m going to hand you off to a customer service agent now who can help you with your query. Agent will have all your information to help with your query. Have a great day!"
+      keepTurn: true
+    transitions: {}  
+  updateFirstName:
+    component: "System.SetVariable"
+    properties:
+      variable: "profile.firstName"
+      value: "John"
+    transitions: {}
+  updateLastName:
+    component: "System.SetVariable"
+    properties:
+      variable: "profile.lastName"
+      value: "Knight"
+    transitions: {}
+  updateEmail:
+    component: "System.SetVariable"
+    properties:
+      value: "JohnKnight@UpTheIrons.com"
+      variable: "profile.email"
+    transitions: {}
+  agentHandoff:
+    component: "System.AgentInitiation"
+    properties:
+      agentChannel: "MyServiceCloudChannel"
+      agentActions: "printGreeting,agent"
+      nlpResultVariable: "iResult"
+    transitions:
+      actions:
+        accepted: "agentConversation"
+  agentConversation:
+    component: "System.AgentConversation"
+    properties:
+      agentChannel: "MyServiceCloudChannel"
+      nlpResultVariable: "iResult"
+    transitions:
+      actions:
+        Greetings: "printGreeting"
+        agent: "agent"
+  endPrompt:
+    component: "System.Output"
+    properties:
+      text: "Connecting you back to the Bot.."
+      keepTurn: true
+    transitions: {}
+  goodBye:
+    component: "System.Output"
+    properties:
+      text: "Have a good day!"
+    transitions:
+      return: "goodBye"
+  reject:
+    component: "System.Output"
+    properties:
+      text: "Sorry, looks like our Agents are currently not available! We'll call you back ASAP"
+    transitions:
+      return: "reject"      
+
+  NoneComponent:
+    component: "System.Output"
+    properties:
+      text: "Sorry, I didn't get you. Could you please repharse it."
+      keepTurn: false
+    transitions: 
+      return: "NoneComponent"      

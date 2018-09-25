@@ -1,0 +1,10 @@
+{
+  "name" : "webhook4ioschat",
+  "enabled" : true,
+  "config" : {
+    "type" : "webhook",
+    "webhookUri" : "https://bots-samples-nodejs:8889/ext/apps/chat/bots/1E3936B7-60F3-4658-B9EF-ECCB5A68E6FE/messages",
+    "platformVersion" : "1.1"
+  },
+  "category" : "bot"
+}

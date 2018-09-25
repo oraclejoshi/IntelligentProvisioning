@@ -1,0 +1,21 @@
+{
+  "name" : "CreateService",
+  "type" : "NLPIntent",
+  "intentParameters" : [ ],
+  "exampleData" : [ {
+    "sentence" : "create data base",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "to create DB",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "create database",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "to create database",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "create a DB",
+    "exampleEntities" : [ ]
+  } ]
+}

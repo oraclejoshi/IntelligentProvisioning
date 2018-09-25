@@ -1,0 +1,15 @@
+{
+  "name" : "StartService",
+  "type" : "NLPIntent",
+  "intentParameters" : [ ],
+  "exampleData" : [ {
+    "sentence" : "start db",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "start a database",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "start a service",
+    "exampleEntities" : [ ]
+  } ]
+}

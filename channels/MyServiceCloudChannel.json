@@ -1,0 +1,13 @@
+{
+  "name" : "MyServiceCloudChannel",
+  "description" : "My ServiceCloud Channel",
+  "enabled" : true,
+  "config" : {
+    "type" : "serviceCloud",
+    "domainName" : "rightnowdemo.com",
+    "hostPrefix" : "rnowgse10005",
+    "userName" : "Admin1",
+    "siteName" : "rnowgse10005"
+  },
+  "category" : "agent"
+}

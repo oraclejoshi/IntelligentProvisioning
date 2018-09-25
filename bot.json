@@ -1,0 +1,6 @@
+{
+  "name" : "IntelligentProvisioningAdvanced",
+  "description" : "Intelligent Provisioning",
+  "type" : "USER",
+  "intentTrainer" : "Sakura"
+}

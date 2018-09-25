@@ -1,0 +1,24 @@
+{
+  "name" : "StartRecovery",
+  "type" : "NLPIntent",
+  "intentParameters" : [ ],
+  "exampleData" : [ {
+    "sentence" : "recovery",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "start recovery",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "db recovery",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "recover db",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "recover",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "restore",
+    "exampleEntities" : [ ]
+  } ]
+}

@@ -1,0 +1,24 @@
+{
+  "name" : "Greetings",
+  "type" : "NLPIntent",
+  "intentParameters" : [ ],
+  "exampleData" : [ {
+    "sentence" : "hey",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "whats up?",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "good morning",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "hi",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "how are u? ",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "hello",
+    "exampleEntities" : [ ]
+  } ]
+}

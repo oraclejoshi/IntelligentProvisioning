@@ -1,0 +1,11 @@
+{
+  "name" : "AlexaChannel",
+  "description" : "Webhook for alexa",
+  "enabled" : true,
+  "config" : {
+    "type" : "webhook",
+    "webhookUri" : "https://bots-samples-nodejs:8889/ext/apps/alexa-provisioningBot/singleBotWebhook/messages",
+    "platformVersion" : "1.1"
+  },
+  "category" : "bot"
+}

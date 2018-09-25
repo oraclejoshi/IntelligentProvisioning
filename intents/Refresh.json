@@ -1,0 +1,24 @@
+{
+  "name" : "Refresh",
+  "type" : "NLPIntent",
+  "intentParameters" : [ ],
+  "exampleData" : [ {
+    "sentence" : "refreshdatabase",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "refresh",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "refresh Db",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "refresh db",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "refresh database",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "DB refresh",
+    "exampleEntities" : [ ]
+  } ]
+}

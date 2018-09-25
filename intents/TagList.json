@@ -1,0 +1,21 @@
+{
+  "name" : "TagList",
+  "type" : "NLPIntent",
+  "intentParameters" : [ ],
+  "exampleData" : [ {
+    "sentence" : "list tag",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "tag",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "tag list",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "tag id",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "tags",
+    "exampleEntities" : [ ]
+  } ]
+}

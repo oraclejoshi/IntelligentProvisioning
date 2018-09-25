@@ -1,0 +1,21 @@
+{
+  "name" : "StartBackup",
+  "type" : "NLPIntent",
+  "intentParameters" : [ ],
+  "exampleData" : [ {
+    "sentence" : "db backup",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "backupdb",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "backup db",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "dbbackup",
+    "exampleEntities" : [ ]
+  }, {
+    "sentence" : "backup",
+    "exampleEntities" : [ ]
+  } ]
+}
